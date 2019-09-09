@@ -8,13 +8,13 @@ int main(){
 	
 	// Assigning point p = (1 -2 4)^T, x = (1 2 2)^T (x is point on plane)
 	double** p = createMat(3,1); double** x = createMat(3,1);
-	p[0][0] = 1; p[1][0] = -2; p[2][0] = 4;
-	x[0][0] = 1; x[1][0] =  2; x[2][0] = 2;
+	*p[0] = 1; *p[1] = -2; *p[2] = 4;
+	*x[0] = 1; *x[1] =  2; *x[2] = 2;
 	
 	// Assigning normal vectors of given planes
 	double** n1 = createMat(3,1); double** n2 = createMat(3,1);
-	n1[0][0] = 1; n1[1][0] = -1; n1[2][0] = 2;
-	n2[0][0] = 2; n2[1][0] = -2; n2[2][0] = 1;
+	*n1[0] = 1; *n1[1] = -1; *n1[2] = 2;
+	*n2[0] = 2; *n2[1] = -2; *n2[2] = 1;
 	
 	// Matrix for cross product
 	double** n1o = createMat(3,3);
