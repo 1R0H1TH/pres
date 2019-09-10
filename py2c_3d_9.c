@@ -28,6 +28,9 @@ int main(){
 	// Finding distance by applying formula
 	double dist = linalg_norm(transpose(matmul(transpose(linalg_sub(p,x,3,1),3,1),n,1,3,3),1,3), 3)/linalg_norm(n,3);
 	
+	// Disposing resources
+	free(p); free(x); free(n1); free(n2); free(n1o); free(n);
+	
 	printf("Distace = %lf",dist);
 	
 	return 0;
