@@ -41,7 +41,7 @@ int main(){
 	printf("Plane equation : (%d %d %d)x = %d\n", (int)*n[0], (int)*n[1], (int)*n[2], (int)c);
 	printf("Distace = %lf\n\n",dist);
 	
-	Matrix foo = foot(n, c, p);
+	Vector foo = foot(n, c, p);
 	print(foo,3,1);
 	
 	int meshLen = 10;
