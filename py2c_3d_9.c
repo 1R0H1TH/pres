@@ -14,7 +14,7 @@ VECTOR foot(VECTOR n, double c_, VECTOR p);
 int main(){
 	
 	// Assigning point p = (1 -2 4)^T, x = (1 2 2)^T (x is point on plane)
-	MATRIX p = createMat(3,1); MATRIX x = createMat(3,1);
+	VECTOR p = createMat(3,1); VECTOR x = createMat(3,1);
 	*p[0] = 1; *p[1] = -2; *p[2] = 4;
 	*x[0] = 1; *x[1] =  2; *x[2] = 2;
 	
