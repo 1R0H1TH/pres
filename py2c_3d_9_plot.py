@@ -24,10 +24,10 @@ ax.plot_surface(x1, y1, z1, color='b',alpha=0.2)
 ax.plot_surface(x2, y2, z2, color='g',alpha=0.2)
 ax.plot_surface(x3, y3, z3, color='r',alpha=0.6)
 
-plt.plot([P[0]],[P[1]],[P[2]],'o')
-plt.plot([foot[0]],[foot[1]],[foot[2]],'o',color='g')
+plt.plot([P[0]],[P[1]],[P[2]],'o',label="P")
+plt.plot([foot[0]],[foot[1]],[foot[2]],'o',color='black')
 plt.plot([P[0],foot[0]],[P[1],foot[1]],[P[2],foot[2]],label="Line $L_1$")
 
 plt.grid()
-plt.axis('equal')
+plt.legend()
 plt.show()
