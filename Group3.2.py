@@ -1,45 +1,48 @@
 from mpl_toolkits.mplot3d import Axes3D
 import matplotlib.pyplot as plt
+
 import numpy as np
+
+def foot(n, c1, p):
+	a,b,c = n
+	d = -c1
+	x1,y1,z1=p
+	k = (-a * x1 - b * y1 - c * z1 - d) / (a**2 + b**2 + c**2)
+	return np.array([a * k + x1, b * k + y1, c * k + z1])
 
 #creating x,y for 3D plotting
 len = 10
-xx, yy = np.meshgrid(range(len), range(len))
+x1, y1 = np.meshgrid(range(len), range(len))
+x2, y2 = np.meshgrid(range(len), range(len))
+x3, z3 = np.meshgrid(range(len+10), range(len+10))
+
 #setting up plot
 fig = plt.figure()
 ax = fig.add_subplot(111,projection='3d')
 
-#Equation of Plane is : n.T * x = c 
+P = np.array([1,-2,4])
+x = np.array([1,2,2])
+n1 = np.array([1,-1,2])
+c1 = 3
+n2 = np.array([2,-2,1])
+c2 = -12
 
-#defining planes
-n1 = np.array([3,3,0]).reshape((3,1))
-c1 = 9
-n2 = np.array([1,-1,2]).reshape((3,1))
-c2 = 3
-n3 = np.array([2,-2,1]).reshape((3,1))
-c3 = -12
+n = np.cross(n1,n2)
+c = x.T@n
+dist = abs((P-x).T@n)/np.linalg.norm(n)
+f = foot(n,c,P)
 
-num = 1 / np.sqrt(2)
-rot = np.array([[num, -num],[num, num]])
+z1 = ((c1-n1[0]*x1-n1[1]*y1)*1.0)/(n1[2])
+z2 = ((c2-n2[0]*x2-n2[1]*y2)*1.0)/(n2[2])
+y3 = ((c-n[0]*x3-n[2]*z3)*1.0)/(n[1])
 
-#corresponding z for planes
-z1 = x1*0#((c1-n1[0]*xx-n1[1]*yy)*1.0)/(n1[2])
-off = np.sqrt(2.25)
-t = np.transpose(np.array([xx,yy,z1]), (1,2,0))
-m = [[num, 0, -num],[0,1,0],[num, 0, num]]
-x,y,z = np.transpose(np.dot(t, m), (2,0,1))  
-z2 = ((c2-n2[0]*xx-n2[1]*yy)*1.0)/(n2[2])
-z3 = ((c3-n3[0]*xx-n3[1]*yy)*1.0)/(n3[2])
+ax.plot_surface(x1, y1, z1, color='b',alpha=0.2)
+ax.plot_surface(x2, y2, z2, color='g',alpha=0.2)
+ax.plot_surface(x3, y3, z3, color='r',alpha=0.6)
 
-#plotting planes
-ax.plot_surface(x+off, z+off, y, color='r',alpha=0.5)
-ax.plot_surface(xx, yy, z2, color='b',alpha=0.2)
-ax.plot_surface(xx, yy, z3, color='g',alpha=0.2)
+plt.plot([P[0]],[P[1]],[P[2]],'o',label="P")
+plt.plot([f[0]],[f[1]],[f[2]],'o',color='black')
+plt.plot([P[0],f[0]],[P[1],f[1]],[P[2],f[2]],label="Line $L_1$")
 
-plt.xlabel('$x$');plt.ylabel('$y$')
-plt.legend(loc='best');plt.grid()
-
+plt.legend()
 plt.show()
-
-	
-	
