@@ -4,15 +4,14 @@
 #include "coeffs.h"
 
 typedef double** Matrix; typedef double** Vector;
-
 Matrix meshgrid(int len, int start, int stepX, int stepY);
 Matrix *createPlane(Vector n, double c, int meshLen);
 Vector foot(Vector n, double c_, Vector p);
 Vector createVec(double x,double y,double z);
+void set(Matrix mat, int row, double x,double y,double z);
 
 int main(){
-	
-	// Assigning point p = (1 -2 4)^T, x = (1 2 2)^T (x is point on plane)
+	// p = (1 -2 4)^T, x = (1 2 2)^T (x is point on plane)
 	Vector p = createVec(1,-2,4);
 	Vector x = createVec(1,2,2);
 	
@@ -23,9 +22,9 @@ int main(){
 	
 	// Matrix for cross product
 	Matrix n1o = createMat(3,3);
-	n1o[0][0] = 0;         n1o[0][1] = -(*n1[2]); n1o[0][2] = *n1[1];
-	n1o[1][0] = *n1[2];    n1o[1][1] = 0;         n1o[1][2] = -(*n1[0]);
-	n1o[2][0] = -(*n1[1]); n1o[2][1] = *n1[0];    n1o[2][2] = 0;
+	set(n1o, 0,       0, -*n1[2],  *n1[1]);
+	set(n1o, 1,  *n1[2],       0, -*n1[0]);
+	set(n1o, 2, -*n1[1],  *n1[0],       0);
 	
 	// Normal vector of the required plane
 	Vector n = matmul(n1o, n2, 3,3,1);
@@ -99,4 +98,7 @@ Vector createVec(double x,double y,double z){
 	Vector vec = createMat(3,1);
 	*vec[0]=x; *vec[1]=y; *vec[2]=z;
 	return vec;
+}
+void set(Matrix mat, int row, double x,double y,double z){
+	mat[row][0]=x; mat[row][1]=y; mat[row][2]=z;
 }
