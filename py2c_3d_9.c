@@ -8,6 +8,7 @@ Matrix meshgrid(int len, int start, int stepX, int stepY);
 Matrix *createPlane(Vector n, double c, int meshLen);
 Vector foot(Vector n, double c_, Vector p);
 Vector createVec(double x,double y,double z);
+Vector cross_pdt(Vector a, Vector b);
 void set(Matrix mat, int row, double x,double y,double z);
 
 int main(){
@@ -20,14 +21,7 @@ int main(){
 	Vector n2 = createVec(2,-2,1);
 	double c1 = 3; double c2 = -12;
 	
-	// Matrix for cross product
-	Matrix n1o = createMat(3,3);
-	set(n1o, 0,       0, -*n1[2],  *n1[1]);
-	set(n1o, 1,  *n1[2],       0, -*n1[0]);
-	set(n1o, 2, -*n1[1],  *n1[0],       0);
-	
-	// Normal vector of the required plane
-	Vector n = matmul(n1o, n2, 3,3,1);
+	Vector n = cross_pdt(n1, n2);
 	
 	double c = **matmul(transpose(x,3,1), n, 1,3,1);
 	
@@ -58,14 +52,13 @@ int main(){
 	savetxt(plane3[1], "data/meshZ3.dat", meshLen, meshLen);
 	savetxt(plane3[2], "data/meshY3.dat", meshLen, meshLen);
 	
-	savetxt(p,"data/P.dat",3,1); savetxt(foot_,"data/foot.dat",3,1);
-	// Disposing resources
-	free(p); free(x); free(n1); free(n2); free(n1o); free(n); free(plane1); free(plane2); free(plane3);
+	savetxt(p,"data/P.dat",3,1);
+	savetxt(foot_,"data/foot.dat",3,1);
 	return 0;
 }
 
 Matrix meshgrid(int len, int start, int stepX, int stepY){
-	double ** ret = createMat(len, len);
+	Matrix ret = createMat(len, len);
 	for (int i=0; i<len; i++)
 		for (int j=0; j<len; j++){
 			ret[i][j] = start + i*stepY + j*stepX;
@@ -88,16 +81,19 @@ Vector foot(Vector n, double c_, Vector p){
 	double a=*n[0]; double b=*n[1]; double c=*n[2]; double d = -c_;
 	double x1=*p[0]; double y1=*p[1]; double z1=*p[2];
     double k = (-a * x1 - b * y1 - c * z1 - d) / (double)(a * a + b * b + c * c);
-    Vector ret = createMat(3,1);
-    *ret[0] = a * k + x1;
-    *ret[1] = b * k + y1;
-    *ret[2] = c * k + z1;
-    return ret;
+    return createVec(a * k + x1, b * k + y1, c * k + z1);
 }
 Vector createVec(double x,double y,double z){
 	Vector vec = createMat(3,1);
 	*vec[0]=x; *vec[1]=y; *vec[2]=z;
 	return vec;
+}
+Vector cross_pdt(Vector a, Vector b){
+	Matrix n1o = createMat(3,3);
+	set(n1o, 0,      0, -*a[2],  *a[1]);
+	set(n1o, 1,  *a[2],      0, -*a[0]);
+	set(n1o, 2, -*a[1],  *a[0],      0);
+	return matmul(n1o, b, 3,3,1);
 }
 void set(Matrix mat, int row, double x,double y,double z){
 	mat[row][0]=x; mat[row][1]=y; mat[row][2]=z;
