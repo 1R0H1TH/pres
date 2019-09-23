@@ -10,9 +10,7 @@ void setnum(int num);
 
 int main (void)
 {
-	
-	
- //set PD2-PD7 as output pins 0xFC=0b11111100 (binary)
+  //set PD2-PD7 as output pins 0xFC=0b11111100 (binary)
   DDRD   |= 0xFC;
   //set PB0 as output pin
   DDRB    |= ((1 << DDB0));
@@ -22,12 +20,11 @@ int main (void)
 	_delay_ms(1000);
 	if (i >= 10) i=0;
   }
-
   return 0;
 }
 
 void setnum(int num){
-	if (num < 0 || num > 10) num = 10;
-	PORTB = ((portB[num] <<  PB0));
+  if (num < 0 || num > 10) num = 10;
+  PORTB = ((portB[num] <<  PB0));
   PORTD = portD[num];
 }
