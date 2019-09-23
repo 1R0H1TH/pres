@@ -23,9 +23,7 @@ int main (void)
 	if (i >= 10) i=0;
   }
 
-  /* . */
   return 0;
-
 }
 
 void setnum(int num){
