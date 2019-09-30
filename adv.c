@@ -15,8 +15,8 @@ double64* roots;
 
 double64 a_n(int n){ return (pow(roots[0],n)-pow(roots[1],n))/(roots[0]-roots[1]); }
 double64 b_n(int n){ return a_n(n-1) + a_n(n+1); }
-double64 a_u10_n(int n){ return a_n(n)/pow(10,n); }
-double64 b_u10_n(int n){ return b_n(n)/pow(10,n); }
+double64 a_10_n(int n){ return a_n(n)/pow(10,n); }
+double64 b_10_n(int n){ return b_n(n)/pow(10,n); }
 
 int main(){
 	
@@ -33,7 +33,7 @@ int main(){
 	printf("Option A is %s\n", boolA);
 	
 	// Verifying option B
-	double64 b = conv(a_u10_n, EPSILON);
+	double64 b = conv(a_10_n, EPSILON);
 	char* boolB = bool(abs(b-(10.0/89.0)) < EPSILON);
 	printf("Option B is %s : (a/10) + (a/10)^2 + ... = %Lf\n", boolB, b);
 	
@@ -49,7 +49,7 @@ int main(){
 	printf("Option C is %s\n", boolC);
 	
 	// Verifying option D
-	double64 d = conv(b_u10_n, EPSILON);
+	double64 d = conv(b_10_n, EPSILON);
 	char* boolD = bool(abs(d-(8.0/89.0)) < EPSILON);
 	printf("Option D is %s : (b/10) + (b/10)^2 + ... = %Lf %s %f\n", boolD, d, *boolD == 'T' ? "=" : "!=", 8.0/89.0);
 	
