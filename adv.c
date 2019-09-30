@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <math.h>
 
-#define EPSILON 2e-16
+#define EPSILON 2e-15
 #define alloc(T,len) (T*)malloc(len*sizeof(T))
 #define abs(x) ((x) >= 0 ? x : -(x))
 #define bool(x) (x==0 ? "False" : "True")
