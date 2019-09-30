@@ -21,6 +21,7 @@ double64 b_u10_n(int n){ return b_n(n)/pow(10,n); }
 int main(){
 	
 	roots = find_roots(1, -1, -1);
+	
 	// Verifying option A for different values of n
 	char* boolA = bool(1);
 	for (int i=1; i<40; i++){
